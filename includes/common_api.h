@@ -17,11 +17,15 @@ extern "C"
 
 	SDK_SHARED void CallibriMathLibInitFilter(CallibriMathLib* callibriMathLibPtr);
 
+	SDK_SHARED void CallibriMathLibSetNetworkFrequency(CallibriMathLib* callibriMathLibPtr, int network_freq);
+
 	SDK_SHARED void CallibriMathLibPushData(CallibriMathLib* callibriMathLibPtr, const double* samples, size_t samplesCount);
 
 	SDK_SHARED void CallibriMathLibProcessDataArr(CallibriMathLib* callibriMathLibPtr);
 
 	SDK_SHARED double CallibriMathLibGetRR(CallibriMathLib* callibriMathLibPtr);
+
+	SDK_SHARED int CallibriMathGetLastRpeakIndex(CallibriMathLib* callibriMathLibPtr);
 
 	SDK_SHARED double CallibriMathLibGetPressureIndex(CallibriMathLib* callibriMathLibPtr);
 

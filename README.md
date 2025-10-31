@@ -2,7 +2,8 @@
  
 The main functionality is the calculation of cardio-interval lengths, heart rate and Stress Index (SI).
 
-During the first 6 seconds the algorithm is learning, if no 5 RR-intervals are found in the signal 5 RR-intervals are not found, the training is repeated. Further work with the library is iterative (adding new data, calculating indicators).
+During the first 10 seconds, the algorithm is trained if it is not found in the signal. 
+5 RR intervals, the training is repeated. In the future, work with the library takes place iteratively (adding new data, calculating indicators).
 
 # Getting started
 
@@ -64,6 +65,7 @@ If you are using a OS other than ours, these dependencies will be required for t
 2. Data processing window size. Integer type. Valid values of sampling_rate / 4 or sampling_rate / 2.
 3. Number of windows to calculate SI. Integer type. Allowable values [20...50].
 4. The averaging parameter of the IN calculation. Default value is 6.
+5. Network frequency. Integer type. Default value is 50. Available values 50 or 60.
 
 ### Creating a library instance
 Firstly you need to determine lybrary parameters and then put them to library. Tne next step is initialize the filters. In the current version the filters are built-in and clearly defined: Butterworth 2nd order BandPass 5_15 Hz.
@@ -85,6 +87,10 @@ CallibriMathLibInitFilter(tCallibriMathPtr);
 // 4. The averaging parameter of the IN calculation. Default value is 6.
 int pressure_index_average = 6;
 CallibriMathLibSetPressureAverage(tCallibriMathPtr, pressure_index_average);
+
+// optional
+// 5. Your network frequency: 50Hz or 60Hz
+CallibriMathLibSetNetworkFrequency(tCallibriMathPtr, 50);
 ```
 
 ## Initializing a data array for transfer to the library:
@@ -123,6 +129,8 @@ if (CallibriMathLibRRdetected(tCallibriMathPtr))
 {               
     // RR-interval length
     double RR_int = CallibriMathLibGetRR(tCallibriMathPtr);
+    //last RP index
+    int rpIdx = CallibriMathGetLastRpeakIndex(tCallibriMathPtr);
     // HR     
     double HeartRate = CallibriMathLibGetHR(tCallibriMathPtr);
     // SI
